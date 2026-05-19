@@ -1,110 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Webpage Title (will show on tab) -->
-    <title>Professional Portfolio</title>
-    <style>
-        /* Basic styling for the page */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        nav {
-            margin: 1rem 0;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 1rem;
-        }
-        section {
-            padding: 2rem;
-            border-bottom: 1px solid #ddd;
-        }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background: #333;
-            color: #fff;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Portfolio</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --surface: rgba(255, 255, 255, 0.06);
+      --surface-2: rgba(255, 255, 255, 0.09);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.72);
+      --border: rgba(255, 255, 255, 0.14);
+      --accent: #7c5cff;
+      --accent-2: #22c55e;
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      --radius: 16px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(124, 92, 255, 0.35), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(34, 197, 94, 0.22), transparent 60%),
+        linear-gradient(180deg, #070a14 0%, var(--bg) 55%, #070a14 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(124, 92, 255, 0.6);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    .container {
+      width: min(1050px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(11, 16, 32, 0.6);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 240px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      letter-spacing: 0.2px;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      padding: 0.6rem 0.85rem;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    main {
+      padding: 2.25rem 0 3rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 1rem;
+      align-items: stretch;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.22), rgba(255, 255, 255, 0.04));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto -20%;
+      height: 120%;
+      background: radial-gradient(circle at 30% 30%, rgba(124, 92, 255, 0.45), transparent 55%);
+      pointer-events: none;
+      transform: rotate(10deg);
+    }
+
+    .hero-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+      margin: 0 0 0.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      max-width: 65ch;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      font-weight: 600;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .btn-primary {
+      border-color: rgba(124, 92, 255, 0.35);
+      background: linear-gradient(135deg, rgba(124, 92, 255, 0.35), rgba(124, 92, 255, 0.12));
+    }
+
+    .side-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+    }
+
+    .side-card h3 {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+    }
+
+    .meta {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .meta li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.7rem;
+      align-items: baseline;
+    }
+
+    .meta strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    section {
+      grid-column: span 6;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+      overflow: hidden;
+      position: relative;
+    }
+
+    section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(500px 140px at 20% 0%, rgba(124, 92, 255, 0.18), transparent 55%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    section h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    @media (max-width: 900px) {
+      section { grid-column: span 12; }
+    }
+
+    ul {
+      margin: 0.5rem 0 0;
+      padding-left: 1.2rem;
+    }
+
+    li { margin: 0.65rem 0; color: var(--muted); }
+
+    li strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.35rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      font-weight: 600;
+    }
+
+    .link-pill:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: rgba(11, 16, 32, 0.6);
+      padding: 1.25rem 0;
+    }
+
+    footer p {
+      margin: 0;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* Accessibility: respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      nav a, .btn, .link-pill { transition: none !important; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">
         <h1>Welcome to My Portfolio</h1>
-        <nav>
-            <a href="#about">About Me</a>
-            <a href="#projects">Projects</a>
-            <a href="#credentials">Credentials</a>
-            <a href="#contact">Contact Info</a>
-        </nav>
-    </header>
+        <p>APCS student • projects • credentials • contact</p>
+      </div>
+      <nav aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#credentials">Credentials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- About Me Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>
-            <!-- Add a brief introduction about yourself here -->
-            Hi, I'm Jack Saegert, and I'm a APCS student at Patrick Henry. I love tinkering, fixing things, short walks in the mounttains, and pondering the nature of the universe. 
-            Thanks for visiting my little portfolio website!
+  <main class="container">
+    <div class="hero">
+      <div class="hero-card">
+        <h2 class="hero-title">Hi, I’m Jack Saegert 👋</h2>
+        <p class="hero-subtitle">
+          I’m an APCS student at Patrick Henry. I love tinkering, fixing things, short walks in the mountains, and pondering the nature of the universe.
         </p>
-    </section>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn" href="#contact">Contact Me</a>
+        </div>
+      </div>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>Projects</h2>
-        <p>
-            <!-- Add a list or description of your projects here -->
-            Here are some of the projects I have worked on:
-        </p>
-        <ul>
-            <li>Project 1: A cool little game I made for my CS class. It's a maze, written entirely in java. Uses javaSwing to listen for keypresses and display the maze! It's pretty simple, but it was my first tangible software project. <a href="https://github.com/phAPCSA25period1/final-project-jacksaegert" target="_blank">[Project repository]</a></li>
-            <li>Project 2: [Brief description] <a href="[link to project repository]" target="_blank">[Project repository]</a></li>
+      <aside class="side-card" aria-label="Quick info">
+        <h3>Quick Highlights</h3>
+        <ul class="meta">
+          <li><strong>Focus:</strong> software & problem-solving</li>
+          <li><strong>Style:</strong> build → test → improve</li>
+          <li><strong>Goal:</strong> keep learning and sharing</li>
         </ul>
-    </section>
+      </aside>
+    </div>
 
-    <!-- Credentials Section -->
-    <section id="credentials">
-        <h2>Credentials</h2>
+    <div class="grid">
+      <section id="about" aria-labelledby="about-title">
+        <h2 id="about-title">About Me</h2>
         <p>
-            <!-- Add your credentials, certifications, or achievements here -->
-            I have earned the following certifications and achievements:
+          Hi, I'm Jack Saegert, and I'm an APCS student at Patrick Henry. I love tinkering, fixing things, short walks in the mountains, and pondering the nature of the universe.
+          Thanks for visiting my portfolio website!
         </p>
-        <ul>
-            <li>Certification 1: [Details]</li>
-            <li>Certification 2: [Details]</li>
-            <li>Certification 3: [Details]</li>
-            <!-- Add images of your certification digital badges -->
-        </ul>
-    </section>
+      </section>
 
-    <!-- Contact Info Section -->
-    <section id="contact">
-        <h2>Contact Info</h2>
-        <p>
-            <!-- Add your contact information here -->
-            Feel free to reach out to me:
-        </p>
+      <section id="projects" aria-labelledby="projects-title">
+        <h2 id="projects-title">Projects</h2>
+        <p>Here are some of the projects I have worked on:</p>
         <ul>
-            <li>Email: [your-email@example.com]</li>
-            <li>LinkedIn: <a href="[your-linkedin-profile]" target="_blank">[Your LinkedIn]</a></li>
+          <li>
+            <strong>Project 1:</strong> A cool little game I made for my CS class. It's a maze, written entirely in Java. Uses JavaSwing to listen for keypresses and display the maze! It's pretty simple, but it was my first tangible software project.
+            <a class="link-pill" href="https://github.com/phAPCSA25period1/final-project-jacksaegert" target="_blank" rel="noopener noreferrer">[Project repository] ↗</a>
+          </li>
+          <li>
+            <strong>Project 2:</strong> [Brief description]
+            <a class="link-pill" href="[link to project repository]" target="_blank" rel="noopener noreferrer">[Project repository] ↗</a>
+          </li>
         </ul>
-    </section>
+      </section>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2025 [Your Name]. All rights reserved.</p>
-    </footer>
+      <section id="credentials" aria-labelledby="credentials-title">
+        <h2 id="credentials-title">Credentials</h2>
+        <p>I have earned the following certifications and achievements:</p>
+        <ul>
+          <li>Certification 1: [Details]</li>
+          <li>Certification 2: [Details]</li>
+          <li>Certification 3: [Details]</li>
+          <!-- Add images of your certification digital badges -->
+        </ul>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contact Info</h2>
+        <p>Feel free to reach out to me:</p>
+        <ul>
+          <li>Email: [your-email@example.com]</li>
+          <li>
+            LinkedIn: <a class="link-pill" href="[your-linkedin-profile]" target="_blank" rel="noopener noreferrer">[Your LinkedIn] ↗</a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 [Your Name]. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
+
